@@ -9,7 +9,6 @@ import {
   Card,
   Center,
   Group,
-  Image,
   Text,
   rem,
   useMantineTheme,
@@ -21,6 +20,7 @@ import {
   IconHeart,
   IconShare,
 } from "@tabler/icons-react";
+import Image from "next/image";
 import { useMemo } from "react";
 import classes from "./UserCard.module.css";
 
@@ -49,8 +49,8 @@ export function UserCard(props: UserCardProps) {
 
   return (
     <Card withBorder radius="md" className={classes.card}>
-      <Card.Section>
-        <Image className="!h-[180px]" alt="" src={skill.image} height={180} />
+      <Card.Section className="!h-[180px] relative">
+        <Image objectFit="cover" fill={true} alt="" src={skill.image} />
       </Card.Section>
 
       <Group justify="space-between" className={classes.footer}>

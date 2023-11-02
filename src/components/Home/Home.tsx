@@ -9,7 +9,7 @@ export function Home() {
 
   return (
     <>
-      {isOnboarded ? (
+      {!isOnboarded ? (
         <Feed />
       ) : (
         <div className="flex flex-col h-full items-center justify-center overflow-x-hidden">

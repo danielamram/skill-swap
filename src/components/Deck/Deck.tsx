@@ -54,10 +54,11 @@ export function Deck({ onFinish }: Props) {
 
       if (!down && gone.size === SKILLS.length) {
         setTimeout(() => {
-          gone.clear();
-          api.start((i) => to(i));
+          // gone.clear();
+          // api.start((i) => to(i));
+
+          onFinish();
         }, 600);
-        onFinish();
       }
     }
   );
