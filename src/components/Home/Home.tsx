@@ -1,5 +1,6 @@
 "use client";
 
+import { Title } from "@mantine/core";
 import { useState } from "react";
 import { Deck } from "../Deck";
 import { Feed } from "../Feed";
@@ -12,13 +13,10 @@ export function Home() {
       {isOnboarded ? (
         <Feed />
       ) : (
-        <div className="flex flex-col h-full items-center justify-center overflow-x-hidden">
-          <h1>
-            <span>👋</span> Welcome to{" "}
-            <a href="https://nextjs.org">SkillSwap</a>
-            <br />
+        <div className="flex flex-col h-full items-center justify-center text-center overflow-x-hidden">
+          <Title>
             <span>👉</span> Swipe right to find your next teacher
-          </h1>
+          </Title>
           <Deck onFinish={() => setIsOnboarded(true)} />
         </div>
       )}
