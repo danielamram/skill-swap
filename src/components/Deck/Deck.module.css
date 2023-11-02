@@ -31,3 +31,27 @@
   box-shadow: 0 12.5px 100px -10px rgba(50, 50, 73, 0.4),
     0 10px 10px -10px rgba(50, 50, 73, 0.3);
 }
+
+.dislike {
+  position: absolute;
+  font-weight: bold;
+  color: #ff6263;
+  font-size: 2rem;
+  border: #ff6263 solid 5px;
+  transform: rotateZ(-10deg);
+  padding: 5px 10px;
+  border-radius: 10px;
+  will-change: opacity;
+}
+
+.like {
+  position: absolute;
+  font-weight: bold;
+  color: #50dbb4;
+  font-size: 2rem;
+  transform: rotateZ(-10deg);
+  border: #50dbb4 solid 5px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  will-change: opacity;
+}

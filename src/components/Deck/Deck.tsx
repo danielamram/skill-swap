@@ -3,6 +3,7 @@
 import { SKILLS } from "@/const";
 import { Card } from "@mantine/core";
 import { animated, to as interpolate, useSprings } from "@react-spring/web";
+import cx from "clsx";
 import Image from "next/image";
 import { useState } from "react";
 import { useDrag } from "react-use-gesture";
@@ -15,7 +16,14 @@ const to = (i: number) => ({
   rot: -10 + Math.random() * 20,
   delay: i * 100,
 });
-const from = (_i: number) => ({ x: 0, rot: 0, scale: 1, y: 0 });
+const from = (_i: number) => ({
+  x: 0,
+  rot: 0,
+  scale: 1,
+  y: 0,
+  opacityLike: 0,
+  opacityDislike: 0,
+});
 // This is being used down there in the view, it interpolates rotation and scale into a css transform
 const trans = (r: number, s: number) =>
   `perspective(1500px) rotateX(30deg) rotateY(${
@@ -27,27 +35,38 @@ interface Props {
 }
 
 export function Deck({ onFinish }: Props) {
-  const [gone] = useState(() => new Set()); // The set flags all the cards that are flicked out
+  let aria = "";
+  const [gone] = useState(() => new Set());
   const [props, api] = useSprings(SKILLS.length, (i) => ({
     ...to(i),
     from: from(i),
-  })); // Create a bunch of springs using the helpers above
-  // Create a gesture, we're interested in down-state, delta (current-pos - click-pos), direction and velocity
+  }));
   const bind = useDrag(
     ({ args: [index], down, movement: [mx], direction: [xDir], velocity }) => {
-      const trigger = velocity > 0.2; // If you flick hard enough it should trigger the card to fly out
-      const dir = xDir < 0 ? -1 : 1; // Direction should either point left or right
-      if (!down && trigger) gone.add(index); // If button/finger's up and trigger velocity is reached, we flag the card ready to fly out
+      const trigger = velocity > 0.2;
+      const dir = xDir < 0 ? -1 : 1;
+      if (!down && trigger) gone.add(index);
       api.start((i) => {
-        if (index !== i) return; // We're only interested in changing spring-data for the current spring
+        if (index !== i) return;
         const isGone = gone.has(index);
-        const x = isGone ? (200 + window.innerWidth) * dir : down ? mx : 0; // When a card is gone it flys out left or right, otherwise goes back to zero
-        const rot = mx / 100 + (isGone ? dir * 10 * velocity : 0); // How much the card tilts, flicking it harder makes it rotate faster
-        const scale = down ? 1.1 : 1; // Active cards lift up a bit
+        const x = isGone ? (200 + window.innerWidth) * dir : down ? mx : 0;
+        const rot = mx / 100 + (isGone ? dir * 10 * velocity : 0);
+        const scale = down ? 1.1 : 1;
+
+        if (x > 20) {
+          aria = "like";
+        } else if (x < -20) {
+          aria = "dislike";
+        } else {
+          aria = "";
+        }
+
         return {
           x,
           rot,
           scale,
+          opacityLike: aria === "like" ? 1 : 0,
+          opacityDislike: aria === "dislike" ? 1 : 0,
           delay: undefined,
           config: { friction: 50, tension: down ? 800 : isGone ? 200 : 500 },
         };
@@ -65,34 +84,49 @@ export function Deck({ onFinish }: Props) {
   );
   return (
     <div className={styles.container}>
-      {props.map(({ x, y, rot, scale }, i) => (
-        <animated.div className={styles.deck} key={i} style={{ x, y }}>
-          <animated.div
-            {...bind(i)}
-            style={{
-              transform: interpolate([rot, scale], trans),
-            }}
-          >
-            <Card className="h-full" shadow="sm" radius="md" padding={0}>
-              <div className="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black to-transparent rounded-lg z-10" />
-              <div className="absolute bottom-0 left-0 w-full p-4 z-10">
-                <h1 className="text-white text-2xl font-light">
-                  {SKILLS[i].name}
-                </h1>
-              </div>
+      {props.map(
+        ({ x, y, rot, scale, opacityLike, opacityDislike }: any, i) => (
+          <animated.div className={styles.deck} key={i} style={{ x, y }}>
+            <animated.div
+              {...bind(i)}
+              style={{
+                transform: interpolate([rot, scale], trans),
+              }}
+            >
+              <Card className="h-full" shadow="sm" radius="md" padding={0}>
+                <div className="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black to-transparent rounded-lg z-10" />
+                <div className="absolute bottom-0 left-0 w-full p-4 z-10">
+                  <h1 className="text-white text-2xl font-light">
+                    {SKILLS[i].name}
+                  </h1>
+                </div>
 
-              <div className="w-full h-full rounded-lg object-cover">
-                <Image
-                  fill={true}
-                  className="rounded-lg object-cover"
-                  src={SKILLS[i].image}
-                  alt={SKILLS[i].name}
-                />
-              </div>
-            </Card>
+                <animated.div
+                  style={{ opacity: opacityDislike, zIndex: 10 }}
+                  className={cx(styles.dislike, "top-1/2 -translate-y-1/2")}
+                >
+                  DISLIKE
+                </animated.div>
+                <animated.div
+                  style={{ opacity: opacityLike, zIndex: 10 }}
+                  className={cx(styles.like, "top-1/2 -translate-y-1/2")}
+                >
+                  I&rsquo;M IN!
+                </animated.div>
+
+                <div className="w-full h-full rounded-lg object-cover">
+                  <Image
+                    fill={true}
+                    className="rounded-lg object-cover"
+                    src={SKILLS[i].image}
+                    alt={SKILLS[i].name}
+                  />
+                </div>
+              </Card>
+            </animated.div>
           </animated.div>
-        </animated.div>
-      ))}
+        )
+      )}
     </div>
   );
 }
