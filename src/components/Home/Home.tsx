@@ -13,7 +13,7 @@ export function Home() {
       {isOnboarded ? (
         <Feed />
       ) : (
-        <div className="flex flex-col h-full items-center justify-center text-center overflow-x-hidden">
+        <div className="flex flex-col h-full items-center justify-center text-center">
           <Title>
             <span>👉</span> Swipe right to find your next teacher
           </Title>

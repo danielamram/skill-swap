@@ -28,7 +28,7 @@ export default function RootLayout({
       <body>
         <MantineProvider theme={theme}>
           <Header />
-          <main>{children}</main>
+          <main className="h-[calc(100%-56px)]">{children}</main>
         </MantineProvider>
       </body>
     </html>

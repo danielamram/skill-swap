@@ -3,6 +3,7 @@
 import { SKILLS } from "@/const";
 import { Card } from "@mantine/core";
 import { animated, to as interpolate, useSprings } from "@react-spring/web";
+import Image from "next/image";
 import { useState } from "react";
 import { useDrag } from "react-use-gesture";
 import styles from "./Deck.module.css";
@@ -73,19 +74,21 @@ export function Deck({ onFinish }: Props) {
             }}
           >
             <Card className="h-full" shadow="sm" radius="md" padding={0}>
-              <div className="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black to-transparent rounded-lg"></div>
-              <div className="absolute bottom-0 left-0 w-full p-4">
+              <div className="absolute bottom-0 left-0 w-full h-full bg-gradient-to-t from-black to-transparent rounded-lg z-10" />
+              <div className="absolute bottom-0 left-0 w-full p-4 z-10">
                 <h1 className="text-white text-2xl font-light">
                   {SKILLS[i].name}
                 </h1>
               </div>
 
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                className="w-full h-full rounded-lg object-cover"
-                src={SKILLS[i].image}
-                alt={SKILLS[i].name}
-              />
+              <div className="w-full h-full rounded-lg object-cover">
+                <Image
+                  fill={true}
+                  className="rounded-lg object-cover"
+                  src={SKILLS[i].image}
+                  alt={SKILLS[i].name}
+                />
+              </div>
             </Card>
           </animated.div>
         </animated.div>
