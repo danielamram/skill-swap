@@ -19,9 +19,9 @@ export function Home() {
             <span
               style={{
                 position: "relative",
-                backgroundColor: "var(--mantine-color-blue-light)",
+                backgroundColor: "#f8ad60",
                 borderRadius: "var(--mantine-radius-sm)",
-                padding: "rem(4px) rem(12px)",
+                padding: "0 6px",
               }}
             >
               right
