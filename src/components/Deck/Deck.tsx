@@ -114,9 +114,10 @@ export function Deck({ onFinish }: Props) {
                   I&rsquo;M IN!
                 </animated.div>
 
-                <div className="w-full h-full rounded-lg object-cover">
+                <div className="w-full h-full rounded-lg relative">
                   <Image
                     fill={true}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="rounded-lg object-cover"
                     src={SKILLS[i].image}
                     alt={SKILLS[i].name}

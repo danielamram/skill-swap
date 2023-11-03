@@ -22,10 +22,14 @@ import {
 } from "@tabler/icons-react";
 import Image from "next/image";
 import { useMemo } from "react";
-import classes from "./UserCard.module.css";
+import classes from "./ServiceCard.module.css";
 
-interface UserCardProps {
-  name: string;
+interface ServiceCardProps {
+  id: string;
+
+  userName: string;
+  userImage: string;
+
   title: string;
   description: string;
   image: string;
@@ -39,7 +43,7 @@ const linkProps = {
   rel: "noopener noreferrer",
 };
 
-export function UserCard(props: UserCardProps) {
+export function ServiceCard(props: ServiceCardProps) {
   const theme = useMantineTheme();
 
   const skill = useMemo(
@@ -50,19 +54,19 @@ export function UserCard(props: UserCardProps) {
   return (
     <Card withBorder radius="md" className={classes.card}>
       <Card.Section className="!h-[180px] relative">
-        <Image objectFit="cover" fill={true} alt="" src={skill.image} />
+        <Image className="object-cover" fill={true} alt="" src={skill.image} />
       </Card.Section>
 
       <Group justify="space-between" className={classes.footer}>
         <Center>
           <Avatar
-            src={`https://i.pravatar.cc/300?u=${props.name}`}
+            src={`https://i.pravatar.cc/300?u=${props.userName}`}
             size={24}
             radius="xl"
             mr="xs"
           />
           <Text fz="sm" inline>
-            {props.name}
+            {props.userName}
           </Text>
         </Center>
 

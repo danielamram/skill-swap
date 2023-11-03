@@ -1,104 +1,155 @@
 "use client";
 
-import { UserService } from "@/types";
+import { User } from "@/types";
 import { SimpleGrid } from "@mantine/core";
-import { UserCard } from "../UserCard";
+import { ServiceCard } from "../ServiceCard";
 
-const users: UserService[] = [
+const users: User[] = [
   {
-    id: 1,
+    id: "1",
     name: "John Doe",
     image: "https://example.com/images/user1.jpg",
-    skill: "yoga",
-    duration: 60,
-    price: 50,
-    title: "Yoga Instructor",
-    description: "Certified yoga instructor with 5 years of experience.",
-    rating: 4.8,
+    services: [
+      {
+        id: "1",
+        title: "Yoga Instructor",
+        description: "Certified yoga instructor with 5 years of experience.",
+        image: "https://example.com/images/user1.jpg",
+        duration: 60,
+        price: 50,
+        rating: 4.8,
+        skill: "yoga",
+      },
+    ],
   },
   {
-    id: 2,
+    id: "2",
     name: "Alice Smith",
     image: "https://example.com/images/user2.jpg",
-    skill: "music",
-    duration: 45,
-    price: 40,
-    title: "Piano Teacher",
-    description: "Experienced piano teacher offering lessons for all levels.",
-    rating: 4.6,
+    services: [
+      {
+        id: "2",
+        title: "Piano Teacher",
+        description:
+          "Experienced piano teacher offering lessons for all levels.",
+        image: "https://example.com/images/user2.jpg",
+        duration: 45,
+        price: 40,
+        rating: 4.6,
+        skill: "music",
+      },
+    ],
   },
   {
-    id: 3,
+    id: "3",
     name: "Ella Johnson",
     image: "https://example.com/images/user3.jpg",
-    skill: "cooking",
-    duration: 90,
-    price: 60,
-    title: "Chef at Home",
-    description: "Personal chef offering gourmet dining at your home.",
-    rating: 4.9,
+    services: [
+      {
+        id: "3",
+        title: "Chef at Home",
+        description: "Personal chef offering gourmet dining at your home.",
+        image: "https://example.com/images/user3.jpg",
+        duration: 90,
+        price: 60,
+        rating: 4.9,
+        skill: "cooking",
+      },
+    ],
   },
   {
-    id: 4,
+    id: "4",
     name: "Robert Wilson",
     image: "https://example.com/images/user4.jpg",
-    skill: "painting",
-    duration: 120,
-    price: 80,
-    title: "Professional Painter",
-    description: "Talented artist specializing in landscapes and portraits.",
-    rating: 4.7,
+    services: [
+      {
+        id: "4",
+        title: "Professional Painter",
+        description:
+          "Talented artist specializing in landscapes and portraits.",
+        image: "https://example.com/images/user4.jpg",
+        duration: 120,
+        price: 80,
+        rating: 4.7,
+        skill: "painting",
+      },
+    ],
   },
   {
-    id: 5,
+    id: "5",
     name: "Emily Brown",
     image: "https://example.com/images/user5.jpg",
-    skill: "training",
-    duration: 60,
-    price: 70,
-    title: "Personal Trainer",
-    description:
-      "Certified personal trainer helping you reach your fitness goals.",
-    rating: 4.9,
+    services: [
+      {
+        id: "5",
+        title: "Personal Trainer",
+        description:
+          "Certified personal trainer helping you reach your fitness goals.",
+        image: "https://example.com/images/user5.jpg",
+        duration: 60,
+        price: 70,
+        rating: 4.9,
+        skill: "training",
+      },
+    ],
   },
   {
-    id: 6,
+    id: "6",
     name: "Michael Davis",
     image: "https://example.com/images/user6.jpg",
-    skill: "dancing",
-    duration: 60,
-    price: 55,
-    title: "Dance Instructor",
-    description: "Learn various dance styles with a professional instructor.",
-    rating: 4.6,
+    services: [
+      {
+        id: "6",
+        title: "Dance Instructor",
+        description:
+          "Learn various dance styles with a professional instructor.",
+        image: "https://example.com/images/user6.jpg",
+        duration: 60,
+        price: 55,
+        rating: 4.6,
+        skill: "dancing",
+      },
+    ],
   },
   {
-    id: 9,
+    id: "9",
     name: "Sophia Taylor",
     image: "https://example.com/images/user9.jpg",
-    skill: "writing",
-    duration: 60,
-    price: 60,
-    title: "Writer for Hire",
-    description:
-      "Experienced writer available for content creation and copywriting.",
-    rating: 4.9,
+    services: [
+      {
+        id: "9",
+        title: "Writer for Hire",
+        description:
+          "Experienced writer available for content creation and copywriting.",
+        image: "https://example.com/images/user9.jpg",
+        duration: 60,
+        price: 60,
+        rating: 4.9,
+        skill: "writing",
+      },
+    ],
   },
 ];
 
 export function Feed() {
+  const services = users.flatMap((user) => user.services);
+
   return (
     <SimpleGrid cols={{ base: 1, xs: 2, md: 4 }}>
-      {users.map((user) => (
-        <UserCard
-          key={user.id}
-          image={user.image}
-          name={user.name}
-          skill={user.skill}
-          duration={user.duration}
-          price={user.price}
-          title={user.title}
-          description={user.description}
+      {services.map((service) => (
+        <ServiceCard
+          key={service.id}
+          {...service}
+          userName={
+            users.find((user) =>
+              user.services.find((s) => s.id === service.id)
+            )!.name
+          }
+          userImage={
+            users.find((user) =>
+              user.services.find((s) => s.id === service.id)
+            )!.image
+          }
           // rating={user.rating}
         />
       ))}
