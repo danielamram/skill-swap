@@ -14,8 +14,20 @@ export function Home() {
         <Feed />
       ) : (
         <div className="flex flex-col h-full items-center justify-center text-center">
-          <Title>
-            <span>👉</span> Swipe right to find your next teacher
+          <Title fz={48} fw="900" tt="uppercase" lh={0.95} lts={-2}>
+            Swipe{" "}
+            <span
+              style={{
+                position: "relative",
+                backgroundColor: "var(--mantine-color-blue-light)",
+                borderRadius: "var(--mantine-radius-sm)",
+                padding: "rem(4px) rem(12px)",
+              }}
+            >
+              right
+            </span>{" "}
+            to find your next teacher
+            <span>👉</span>
           </Title>
           <Deck onFinish={() => setIsOnboarded(true)} />
         </div>
