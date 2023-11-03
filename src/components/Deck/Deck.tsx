@@ -103,15 +103,21 @@ export function Deck({ onFinish }: Props) {
 
                 <animated.div
                   style={{ opacity: opacityDislike, zIndex: 10 }}
-                  className={cx(styles.dislike, "top-1/2 -translate-y-1/2")}
+                  className={cx(
+                    styles.dislike,
+                    "top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 -rotate-12"
+                  )}
                 >
                   DISLIKE
                 </animated.div>
                 <animated.div
                   style={{ opacity: opacityLike, zIndex: 10 }}
-                  className={cx(styles.like, "top-1/2 -translate-y-1/2")}
+                  className={cx(
+                    styles.like,
+                    "top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 -rotate-12 "
+                  )}
                 >
-                  I&rsquo;M IN!
+                  LIKE
                 </animated.div>
 
                 <div className="w-full h-full rounded-lg relative">
