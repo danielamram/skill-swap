@@ -14,7 +14,7 @@ export function Home() {
         <Feed />
       ) : (
         <div className="flex flex-col h-full items-center justify-center text-center">
-          <Title fz={48} fw="900" tt="uppercase" lh={0.95} lts={-2}>
+          <Title fz={48} fw="900" tt="uppercase" lts={-2}>
             Swipe{" "}
             <span
               style={{
