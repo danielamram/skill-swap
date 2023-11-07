@@ -26,7 +26,7 @@ export function Home() {
             >
               right
             </span>{" "}
-            to find your next teacher
+            to find your next experience
             <span>👉</span>
           </Title>
           <Deck onFinish={() => setIsOnboarded(true)} />
